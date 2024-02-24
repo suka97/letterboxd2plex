@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+
+# Description: Import Letterboxd ratings to Plex
+# Author: Suka97
+# Source: https://github.com/suka97/letterboxd2plex
+
 import argparse, yaml, os
 import feedparser
 from plexapi.server import PlexServer
@@ -10,7 +16,8 @@ def cmp_float(n1, n2):
 parser = argparse.ArgumentParser(description='Import Letterboxd ratings to Plex')
 parser.add_argument('--config', default=f'{os.path.dirname(__file__)}/config.yml',
                     help='Configuration file')
-parser.add_argument('--exit_on_match', action="store_true")
+parser.add_argument('--exit_on_match', action="store_true",
+                    help='Exit on first rating match. Recommended when run periodically')
 parser.add_argument('--dry_run', action="store_true")
 args = parser.parse_args()
 
@@ -54,11 +61,12 @@ for rev in reviews:
     # print(f'### {rev["title"]}')
     
     # Skip if ratings match
-    if ( cmp_float(plex_movie.userRating, rev["rating"]) ):
-        # print(f'Skipping {rev["title"]} as ratings match')
-        if args.exit_on_match:
-            exit(0)
-        continue
+    if ( plex_movie.userRating is not None ):
+        if ( cmp_float(plex_movie.userRating, rev["rating"]) ):
+            # print(f'Skipping {rev["title"]} as ratings match')
+            if args.exit_on_match:
+                exit(0)
+            continue
 
     # Update Plex Rating
     if not args.dry_run:

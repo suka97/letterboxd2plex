@@ -1,3 +1,6 @@
+# Change this file to config.yml and fill in the required fields
+# You can also pass the config file as an argument to the script: --config /path/to/config.yml
+
 letterboxd:
   rss: "https://letterboxd.com/xxxxx/rss/"
 
