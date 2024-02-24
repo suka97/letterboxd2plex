@@ -1,4 +1,4 @@
-import argparse, yaml
+import argparse, yaml, os
 import feedparser
 from plexapi.server import PlexServer
 
@@ -8,7 +8,7 @@ def cmp_float(n1, n2):
 
 # Parse arguments
 parser = argparse.ArgumentParser(description='Import Letterboxd ratings to Plex')
-parser.add_argument('--config', default='./config.yml',
+parser.add_argument('--config', default=f'{os.path.dirname(__file__)}/config.yml',
                     help='Configuration file')
 parser.add_argument('--exit_on_match', action="store_true")
 parser.add_argument('--dry_run', action="store_true")
