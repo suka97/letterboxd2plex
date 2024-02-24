@@ -1,0 +1,7 @@
+letterboxd:
+  rss: "https://letterboxd.com/xxxxx/rss/"
+
+plex: 
+  base_url: "http://localhost:32400"
+  token: "xxxxxxxxxxx"
+  library: "Movies"
