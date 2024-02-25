@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 # Description: Import Letterboxd ratings to Plex
 # Author: Suka97
