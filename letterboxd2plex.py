@@ -19,6 +19,7 @@ parser.add_argument('--config', default=f'{os.path.dirname(__file__)}/config.yml
 parser.add_argument('--exit_on_match', action="store_true",
                     help='Exit on first rating match. Recommended when run periodically')
 parser.add_argument('--dry_run', action="store_true")
+parser.add_argument('--tmdb')
 args = parser.parse_args()
 
 # Load configuration
@@ -47,7 +48,13 @@ plex = PlexServer(config['plex']['base_url'], config['plex']['token'])
 plex_lib = plex.library.section(config['plex']['library'])
 
 # Update Plex Ratings
+matched = False
 for rev in reviews:
+    # Check only selected tmbdb if passed as argument
+    if args.tmdb != None:
+        if rev["tmdb"] != args.tmdb:
+            continue
+
     # Match Plex movie using tmbd id
     try:
         plex_movie = plex_lib.getGuid(f'tmdb://{rev["tmdb"]}')
@@ -68,7 +75,17 @@ for rev in reviews:
                 exit(0)
             continue
 
+    matched = True
+
     # Update Plex Rating
     if not args.dry_run:
         plex_movie.rate(rev["rating"])
+        plex_movie.markPlayed()
     print(f'Updated rating for {rev["title"]} to {rev["rating"]}')
+
+    # Exit if selected tmbd
+    if args.tmdb != None:
+        exit(0)
+
+if not matched:
+    print('No ratings to update')
