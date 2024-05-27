@@ -34,12 +34,10 @@ You should set a *Custom Script* as shown below:
 
 
 ## Dependencies
-This script requires the following python packages to be installed:
-
-- plexapi
-- feedparser
-
-You can install them by running `python3 -m pip install plexapi feedparser`
+You can install all the package dependencies by running the following command:
+```
+pip install -r requirements.txt
+```
 
 
 ## Configuration File
@@ -70,11 +68,3 @@ Simply run the script with python passing your config file as argument:
 ```bash
 python3 maintainerr4telegram.py --config config.yml
 ```
-
-### Dependencies
-This script requires the following python packages to be installed:
-
-- plexapi
-- telebot
-
-You can install them by running `python3 -m pip install plexapi telebot`
