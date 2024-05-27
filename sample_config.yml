@@ -8,3 +8,13 @@ plex:
   base_url: "http://localhost:32400"
   token: "xxxxxxxxxxx"
   library: "Movies"
+
+
+# Below settings apply only if you want to use 
+# If not, feel free to skip them
+telegram:
+  token: "xxxxxxxxxxx:xxxxxxxxxxxxxxx"
+  chat_id: xxxxxx
+
+maintainerr:
+  collections: [ "xxxx", "xxxx" ]
