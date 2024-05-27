@@ -26,6 +26,12 @@ The `--exit_on_match` flag stops the sync on the first rating match found. This 
 
 You can more find information about the command arguments by running `python3 letterboxd2plex.py -h`
 
+### Radarr configuration
+You can also trigger the script **only when importing a movie**, using with [Radarr Custom Scripts](https://wiki.servarr.com/radarr/settings#connections). 
+You should set a *Custom Script* as shown below:
+
+![](./readme/radarr_config.png)
+
 
 ## Dependencies
 This script requires the following python packages to be installed:
@@ -45,3 +51,30 @@ The script requires a YAML configuration containing:
 - Your Plex library name to sync
 
 You can find an exaple configuration on *sample_config.yml*
+
+---
+---
+
+# Other
+If you are using this kind of script, it's likely that you are really into the Homelab thing. I also made a few custom scripts for missing functionalities like:
+
+## maintainerr4telegram
+If you use [Maintainerr](https://github.com/jorenn92/Maintainerr) for automatically deleting movies based on custom filters, this script could be useful. 
+
+Basically this script monitors selected Plex Collections and **sends a Telegram notification** when a new movie is added to them. You can set it to monitor Maintainerr filtered collections, and it will notify you when a movie triggered the filter. 
+
+Currently this functionality is missing from Maintainerr. I've added a [feature request](https://github.com/jorenn92/Maintainerr/issues/914) for this, but in the meantime this will do the trick.
+
+### Usage
+Simply run the script with python passing your config file as argument:
+```bash
+python3 maintainerr4telegram.py --config config.yml
+```
+
+### Dependencies
+This script requires the following python packages to be installed:
+
+- plexapi
+- telebot
+
+You can install them by running `python3 -m pip install plexapi telebot`
