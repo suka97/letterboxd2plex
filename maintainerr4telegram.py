@@ -12,7 +12,7 @@ from plexapi.server import PlexServer
 parser = argparse.ArgumentParser(description='Monitor Plex collection and notify newly added throgh Telegram')
 parser.add_argument('--config', default=f'{os.path.dirname(__file__)}/config.yml',
                     help='Configuration file')
-parser.add_argument('--silent', action="store_false", help='Run silently without sending messages (for first time run)')
+parser.add_argument('--silent', action="store_true", help='Run silently without sending messages (for first time run)')
 args = parser.parse_args()
 
 # Load configuration
@@ -75,5 +75,5 @@ for coll in plex_coll:
     new_items.append(coll_obj)
 
 # Save new items to json file
-with open('./.maintainerr_items.yaml', 'w') as f:
+with open(f'{os.path.dirname(__file__)}/.maintainerr_items.yaml', 'w') as f:
     yaml.dump(new_items, f)
