@@ -23,6 +23,9 @@ parser.add_argument('--tmdb',
                     help='Update only the movie with the specified TMDb ID')
 args = parser.parse_args()
 
+if args.dry_run:
+    print('Dry run enabled. No ratings will be updated')
+
 # Load configuration
 with open(args.config) as stream:
     try:
@@ -35,13 +38,17 @@ with open(args.config) as stream:
 feed = feedparser.parse(config['letterboxd']['rss'])
 reviews = []
 for entry in feed.entries:
-    rev = {
-        "title": entry.letterboxd_filmtitle,
-        "tmdb": entry.tmdb_movieid,
-        "rating": float(entry.letterboxd_memberrating) * 2,
-        "link": entry.link
-    }
-    reviews.append(rev)
+    try:
+        rev = {
+            "title": entry.letterboxd_filmtitle,
+            "tmdb": entry.tmdb_movieid,
+            "rating": float(entry.letterboxd_memberrating) * 2,
+            "link": entry.link
+        }
+        reviews.append(rev)
+    except:
+        print(f'Could not parse review for {entry.letterboxd_filmtitle}')
+        continue
 print(f'Fetched {len(reviews)} reviews from Letterboxd')
 
 # Connect to Plex
