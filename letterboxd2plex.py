@@ -18,7 +18,8 @@ parser.add_argument('--config', default=f'{os.path.dirname(__file__)}/config.yml
                     help='Configuration file')
 parser.add_argument('--exit_on_match', action="store_true",
                     help='Exit on first rating match. Recommended when run periodically')
-parser.add_argument('--dry_run', action="store_true")
+parser.add_argument('--dry_run', action="store_true", 
+                    help='Dry-Run mode, do not save fetched ratings (only print them)')
 parser.add_argument('--tmdb',
                     help='Update only the movie with the specified TMDb ID')
 args = parser.parse_args()
@@ -47,7 +48,7 @@ for entry in feed.entries:
         }
         reviews.append(rev)
     except:
-        print(f'Could not parse review for {entry.letterboxd_filmtitle}')
+        print(f'Could not parse review for {entry.title}')
         continue
 print(f'Fetched {len(reviews)} reviews from Letterboxd')
 
